@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { UserService } from '../user/user.service';
 import { File } from './interfaces/file.interface';
 
 @Injectable()
 export class FileService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @Inject(forwardRef(() => UserService))
+    private readonly userService: UserService,
+  ) {}
 
   public getById(pictureId: string): File {
     return {

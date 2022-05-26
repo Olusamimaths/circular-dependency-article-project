@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { FileService } from 'src/file-service/file.service';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { FileService } from '../file-service/file.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly fileService: FileService) {}
+  constructor(
+    @Inject(forwardRef(() => FileService))
+    private readonly fileService: FileService,
+  ) {}
 
   public async getUserById(userId: string) {
     // actual work of retrieving user
